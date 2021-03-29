@@ -1,0 +1,29 @@
+.shippingView {
+  width: 65%;
+  margin: 0px auto;
+  margin-top: 2%;
+}
+
+.shippingView__container {
+  width: 40%;
+  margin: 0px auto;
+  margin-top: 10%;
+}
+
+.shippingView__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.shippingView__form__input {
+  padding-left: 20px;
+  height: 36px;
+  outline: none;
+  border: none;
+  background-color: rgb(235, 235, 235);
+  margin-bottom: 10px;
+}
+
+.shippingView__label {
+  margin-bottom: 5px;
+}

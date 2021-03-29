@@ -1,0 +1,12 @@
+.userProfileView {
+  width: 50%;
+  margin: 0px auto;
+  margin-top: 8%;
+}
+
+.userProfileView__listItem {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -1,0 +1,20 @@
+.products {
+  margin: 5px;
+}
+.products__card {
+  padding: 5px;
+  transition: all 0.2s ease-in-out;
+}
+
+.products__card:hover {
+  transform: scale(1.01);
+}
+
+.products__card__link,
+.products__card__link:visited {
+  text-decoration: none;
+  color: black;
+}
+.products__card__link:hover {
+  text-decoration: underline;
+}

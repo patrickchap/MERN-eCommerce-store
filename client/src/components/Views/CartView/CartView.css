@@ -1,0 +1,29 @@
+.cart {
+  display: flex;
+}
+
+.cart__left {
+  flex: 0.85;
+}
+
+.cart__left__listItem {
+  width: 80%;
+  margin: 0px auto;
+  /* background-color: rebeccapurple; */
+}
+
+.cart__left__listItem__img {
+  height: 150px;
+}
+
+.cart__left__listItem__card {
+  width: 100% !important;
+}
+
+.cart__left__listItem__cardContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 30px;
+  margin-right: 30px;
+}

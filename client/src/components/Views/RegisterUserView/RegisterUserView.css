@@ -1,0 +1,32 @@
+.registerUserView__container {
+  width: 40%;
+  margin: 0px auto;
+  margin-top: 10%;
+}
+
+.registerUserView__title {
+  text-align: center;
+}
+
+.registerUserView__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.registerUserView__form__input {
+  padding-left: 20px;
+  height: 36px;
+  outline: none;
+  border: none;
+  background-color: rgb(235, 235, 235);
+  margin-bottom: 10px;
+}
+
+/* .registerUserView__form__submit {
+  background-color: black !important;
+  color: white !important;
+} */
+
+.registerUserView__label {
+  margin-bottom: 5px;
+}
