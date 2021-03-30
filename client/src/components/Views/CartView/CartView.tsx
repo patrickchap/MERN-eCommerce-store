@@ -176,7 +176,9 @@ const CartView: React.FC<RouteComponentProps> = observer(
                     <ListItem>
                       <Button
                         variant="contained"
-                        onClick={() => history.push("/login?redirect=shipping")}
+                        onClick={() =>
+                          history.push("/login?redirect=shipping/address")
+                        }
                         //   disabled={product?.countInStock === 0}
                         style={{
                           backgroundColor: "black",

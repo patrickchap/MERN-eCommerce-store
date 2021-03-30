@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { observer } from "mobx-react-lite";
 import "./ShippingView.css";
 import { rootStore } from "../../../RootStore";
+import { useHistory } from "react-router-dom";
 
 type Inputs = {
   Address: string;
@@ -12,18 +13,27 @@ type Inputs = {
   Country: string;
 };
 
-const ShippingView: React.FC = observer(() => {
+interface props {
+  ShippingFlow: React.FC<{}>;
+}
+
+const ShippingView: React.FC<props> = observer(({ ShippingFlow }) => {
+  const history = useHistory();
   const { register, handleSubmit, errors } = useForm<Inputs>();
   const root = useContext(rootStore);
   const { updateShippingDetail, shippingDetail } = root.CartStore;
 
   const onSubmit = (e: Inputs) => {
     updateShippingDetail(e);
+    history.push("/shipping/delivery");
   };
 
   return (
     <div className="shippingView">
       <div className="shippingView__container">
+        <div className="shippingView__shippingFlow">
+          <ShippingFlow />
+        </div>
         <form onSubmit={handleSubmit(onSubmit)} className="shippingView__form">
           <label htmlFor="address" className="shippingView__label">
             Address
@@ -73,17 +83,33 @@ const ShippingView: React.FC = observer(() => {
             id="country"
           />
 
-          <Button
-            type="submit"
-            variant="contained"
-            className="registerUserView__form__submit"
-            style={{
-              backgroundColor: "black",
-              color: "white",
-            }}
-          >
-            Continue
-          </Button>
+          <div className="shippingView__form__buttons">
+            <Button
+              type="submit"
+              variant="contained"
+              className="registerUserView__form__submit"
+              style={{
+                backgroundColor: "black",
+                color: "white",
+              }}
+              onClick={() => history.push("/cart")}
+            >
+              Back to Cart
+            </Button>
+
+            <Button
+              type="submit"
+              variant="contained"
+              className="registerUserView__form__submit"
+              style={{
+                backgroundColor: "black",
+                color: "white",
+              }}
+              // onClick={() => history.push("/shipping/delivery")}
+            >
+              Continue
+            </Button>
+          </div>
         </form>
       </div>
     </div>

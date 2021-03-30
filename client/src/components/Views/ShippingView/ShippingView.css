@@ -5,7 +5,7 @@
 }
 
 .shippingView__container {
-  width: 40%;
+  max-width: 400px;
   margin: 0px auto;
   margin-top: 10%;
 }
@@ -26,4 +26,14 @@
 
 .shippingView__label {
   margin-bottom: 5px;
+}
+
+.shippingView__shippingFlow {
+  margin-bottom: 20px;
+}
+
+.shippingView__form__buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
