@@ -1,5 +1,5 @@
 import Button from "@material-ui/core/Button";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { observer } from "mobx-react-lite";
 import "./ShippingView.css";
@@ -23,6 +23,34 @@ const ShippingView: React.FC<props> = observer(({ ShippingFlow }) => {
   const root = useContext(rootStore);
   const { updateShippingDetail, shippingDetail } = root.CartStore;
 
+  const [address, setAddress] = useState(
+    shippingDetail ? shippingDetail.Address : ""
+  );
+
+  const [city, setCity] = useState(shippingDetail ? shippingDetail.City : "");
+  const [postalCode, setPostalCode] = useState(
+    shippingDetail ? shippingDetail.PostalCode : ""
+  );
+  const [country, setCountry] = useState(
+    shippingDetail ? shippingDetail.Country : ""
+  );
+
+  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAddress(e.target.value);
+  };
+
+  const handleCityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCity(e.target.value);
+  };
+
+  const handlePostalCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPostalCode(e.target.value);
+  };
+
+  const handleCountryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCountry(e.target.value);
+  };
+
   const onSubmit = (e: Inputs) => {
     updateShippingDetail(e);
     history.push("/shipping/delivery");
@@ -45,6 +73,8 @@ const ShippingView: React.FC<props> = observer(({ ShippingFlow }) => {
             ref={register({ required: true })}
             className="shippingView__form__input"
             id="address"
+            value={address}
+            onChange={(e) => handleAddressChange(e)}
           />
 
           <label htmlFor="city" className="shippingView__label">
@@ -57,6 +87,8 @@ const ShippingView: React.FC<props> = observer(({ ShippingFlow }) => {
             ref={register({ required: true })}
             className="shippingView__form__input"
             id="city"
+            value={city}
+            onChange={(e) => handleCityChange(e)}
           />
 
           <label htmlFor="postalCode" className="shippingView__label">
@@ -69,6 +101,8 @@ const ShippingView: React.FC<props> = observer(({ ShippingFlow }) => {
             ref={register({ required: true })}
             className="shippingView__form__input"
             id="postalCode"
+            value={postalCode}
+            onChange={(e) => handlePostalCodeChange(e)}
           />
 
           <label htmlFor="country" className="shippingView__label">
@@ -81,6 +115,8 @@ const ShippingView: React.FC<props> = observer(({ ShippingFlow }) => {
             ref={register({ required: true })}
             className="shippingView__form__input"
             id="country"
+            value={country}
+            onChange={(e) => handleCountryChange(e)}
           />
 
           <div className="shippingView__form__buttons">

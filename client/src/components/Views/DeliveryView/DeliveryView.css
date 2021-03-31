@@ -19,3 +19,23 @@
 .deliveryView__shippingFlow {
   margin-bottom: 20px;
 }
+
+.deliveryView__form__body {
+  margin-bottom: 20px;
+}
+
+.deliveryView__form__line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.deliveryView__form__line--left {
+  display: flex;
+  align-items: center;
+}
+
+.deliveryView__form__line--right--wrap {
+  width: 50%;
+  text-align: right;
+}

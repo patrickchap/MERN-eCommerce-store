@@ -14,6 +14,7 @@ import UpdateUserInfoView from "./components/Views/UpdateUserInfoView/UpdateUser
 import ShippingView from "./components/Views/ShippingView/ShippingView";
 import ShippingFlow from "./components/ShippingFlow/ShippingFlow";
 import DeliveryView from "./components/Views/DeliveryView/DeliveryView";
+import ReviewView from "./components/Views/ReviewView/ReviewView";
 
 const App: React.FC = observer(() => {
   const root = useContext(rootStore);
@@ -33,6 +34,7 @@ const App: React.FC = observer(() => {
           <div className="app__body">
             <Switch>
               <Route exact path="/" component={HomeView} />
+
               <Route
                 exact
                 path="/shipping/address"
@@ -49,6 +51,13 @@ const App: React.FC = observer(() => {
                   <DeliveryView
                     ShippingFlow={() => <ShippingFlow step={1} />}
                   />
+                )}
+              />
+              <Route
+                exact
+                path="/shipping/review"
+                component={() => (
+                  <ReviewView ShippingFlow={() => <ShippingFlow step={2} />} />
                 )}
               />
               <Route exact path="/login" component={LoginView} />
