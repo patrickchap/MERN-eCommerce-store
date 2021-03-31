@@ -3,6 +3,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { observer } from "mobx-react-lite";
+import Alert from "@material-ui/lab/Alert";
 import "./DeliveryView.css";
 
 interface props {
@@ -74,6 +75,9 @@ const DeliveryView: React.FC<props> = observer(({ ShippingFlow }) => {
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
+          {errors.delivery && (
+            <Alert severity="error">Delivery Option Needed</Alert>
+          )}
           <div className="deliveryView__form__body">
             <div className="deliveryView__form__line">
               <div className="deliveryView__form__line--left">
@@ -126,7 +130,6 @@ const DeliveryView: React.FC<props> = observer(({ ShippingFlow }) => {
               </div>
             </div>
           </div>
-          {errors.delivery && <p>Your input is required</p>}
 
           <div className="deliveryView__form__buttons">
             <Button

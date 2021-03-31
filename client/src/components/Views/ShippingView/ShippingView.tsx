@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite";
 import "./ShippingView.css";
 import { rootStore } from "../../../RootStore";
 import { useHistory } from "react-router-dom";
+import Alert from "@material-ui/lab/Alert";
 
 type Inputs = {
   Address: string;
@@ -63,6 +64,7 @@ const ShippingView: React.FC<props> = observer(({ ShippingFlow }) => {
           <ShippingFlow />
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="shippingView__form">
+          {errors.Address && <Alert severity="error">Address Needed</Alert>}
           <label htmlFor="address" className="shippingView__label">
             Address
           </label>
@@ -76,6 +78,7 @@ const ShippingView: React.FC<props> = observer(({ ShippingFlow }) => {
             value={address}
             onChange={(e) => handleAddressChange(e)}
           />
+          {errors.City && <Alert severity="error">City Needed</Alert>}
 
           <label htmlFor="city" className="shippingView__label">
             City
@@ -91,6 +94,10 @@ const ShippingView: React.FC<props> = observer(({ ShippingFlow }) => {
             onChange={(e) => handleCityChange(e)}
           />
 
+          {errors.PostalCode && (
+            <Alert severity="error">Postal Code Needed</Alert>
+          )}
+
           <label htmlFor="postalCode" className="shippingView__label">
             Postal Code
           </label>
@@ -104,6 +111,7 @@ const ShippingView: React.FC<props> = observer(({ ShippingFlow }) => {
             value={postalCode}
             onChange={(e) => handlePostalCodeChange(e)}
           />
+          {errors.Country && <Alert severity="error">Country Needed</Alert>}
 
           <label htmlFor="country" className="shippingView__label">
             Country
