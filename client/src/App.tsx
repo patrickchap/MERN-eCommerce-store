@@ -15,6 +15,7 @@ import ShippingView from "./components/Views/ShippingView/ShippingView";
 import ShippingFlow from "./components/ShippingFlow/ShippingFlow";
 import DeliveryView from "./components/Views/DeliveryView/DeliveryView";
 import ReviewView from "./components/Views/ReviewView/ReviewView";
+import PaymentView from "./components/Views/PaymentView/PaymentView";
 
 const App: React.FC = observer(() => {
   const root = useContext(rootStore);
@@ -58,6 +59,14 @@ const App: React.FC = observer(() => {
                 path="/shipping/review"
                 component={() => (
                   <ReviewView ShippingFlow={() => <ShippingFlow step={2} />} />
+                )}
+              />
+
+              <Route
+                exact
+                path="/shipping/payment"
+                component={() => (
+                  <PaymentView ShippingFlow={() => <ShippingFlow step={3} />} />
                 )}
               />
               <Route exact path="/login" component={LoginView} />
