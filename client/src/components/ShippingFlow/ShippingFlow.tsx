@@ -30,7 +30,12 @@ const ShippingFlow: React.FC<props> = ({ step }) => {
     <Button style={grayButton} onClick={() => history.push("/shipping/review")}>
       Review
     </Button>,
-    <Button style={grayButton}>Payment</Button>,
+    <Button
+      style={grayButton}
+      onClick={() => history.push("/shipping/payment")}
+    >
+      Payment
+    </Button>,
   ]);
 
   const [stepsBlack] = useState([
@@ -52,7 +57,12 @@ const ShippingFlow: React.FC<props> = ({ step }) => {
     >
       Review
     </Button>,
-    <Button style={blackButton}>Payment</Button>,
+    <Button
+      style={blackButton}
+      onClick={() => history.push("/shipping/payment")}
+    >
+      Payment
+    </Button>,
   ]);
 
   return (
@@ -62,7 +72,6 @@ const ShippingFlow: React.FC<props> = ({ step }) => {
         aria-label="contained primary button group"
         style={{
           justifySelf: "center",
-          // minWidth: "400px",
           display: "flex",
         }}
       >

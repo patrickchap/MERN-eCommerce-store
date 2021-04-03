@@ -1,0 +1,39 @@
+.paymentView {
+  width: 65%;
+  margin: 0px auto;
+  margin-top: 2%;
+}
+
+.paymentView__container {
+  max-width: 400px;
+  margin: 0px auto;
+  margin-top: 10%;
+}
+
+.paymentView__shippingFlow {
+  margin-bottom: 20px;
+}
+
+.paymentView__form__body {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.paymentView__form__input {
+  padding-left: 20px;
+  height: 36px;
+  outline: none;
+  border: none;
+  background-color: rgb(235, 235, 235);
+  margin-bottom: 10px;
+}
+
+.paymentView__label {
+  margin-bottom: 5px;
+}
+
+.paymentView--bottomLine {
+  display: flex;
+  justify-content: space-between;
+}
