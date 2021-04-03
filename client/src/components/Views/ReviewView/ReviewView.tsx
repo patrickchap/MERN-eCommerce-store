@@ -1,16 +1,68 @@
-import React from "react";
-import "./ReviewView.css";
+import React, { useContext } from "react";
 import { observer } from "mobx-react-lite";
+import { rootStore } from "../../../RootStore";
+import "./ReviewView.css";
+import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router-dom";
 
 interface props {
   ShippingFlow: React.FC<{}>;
 }
 
 const ReviewView: React.FC<props> = observer(({ ShippingFlow }) => {
+  const root = useContext(rootStore);
+  const { CartStore } = root;
+  const { cartItems } = CartStore;
+  let history = useHistory();
+
   return (
     <div className="reviewView">
-      ReviewView
-      <ShippingFlow />
+      <div className="reviewView__container">
+        <div className="reviewView__shippingFlow">
+          <ShippingFlow />
+        </div>
+        <div className="reviewView__line">
+          <h4>Product</h4>
+          <h4>Price</h4>
+          <h4>Quantity</h4>
+          <h4>Total</h4>
+        </div>
+        {cartItems.map((itm) => (
+          <div className="reviewView__line">
+            <img className="reviewView__img" src={itm.image} alt="" />
+            <p>{`$${itm.price}`}</p>
+            <p>{itm.qty}</p>
+            <p>{`$${itm.countInStock * itm.price}`}</p>
+          </div>
+        ))}
+
+        <div className="reviewView__form__buttons">
+          <Button
+            type="button"
+            variant="contained"
+            className="registerUserView__form__submit"
+            style={{
+              backgroundColor: "black",
+              color: "white",
+            }}
+            onClick={() => history.push("/shipping/delivery")}
+          >
+            Back to Delivery
+          </Button>
+          <Button
+            type="button"
+            variant="contained"
+            className="registerUserView__form__submit"
+            style={{
+              backgroundColor: "black",
+              color: "white",
+            }}
+            onClick={() => history.push("/shipping/payment")}
+          >
+            Continue to Payment
+          </Button>
+        </div>
+      </div>
     </div>
   );
 });

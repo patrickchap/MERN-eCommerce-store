@@ -81,6 +81,13 @@ const DeliveryView: React.FC<props> = observer(({ ShippingFlow }) => {
           <div className="deliveryView__form__body">
             <div className="deliveryView__form__line">
               <div className="deliveryView__form__line--left">
+                <h3>Shipping</h3>
+              </div>
+              <h3>ESTIMATED ARRIVAL</h3>
+            </div>
+
+            <div className="deliveryView__form__line">
+              <div className="deliveryView__form__line--left">
                 <input
                   type="radio"
                   name="delivery"

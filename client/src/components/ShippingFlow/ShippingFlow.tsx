@@ -9,17 +9,28 @@ interface props {
   step: number;
 }
 
-const blackButton = { backgroundColor: "black", color: "white" };
+const blackButton = { backgroundColor: "black", color: "white", flex: ".25" };
+const grayButton = { flex: ".25" };
 
 const ShippingFlow: React.FC<props> = ({ step }) => {
   let history = useHistory();
   const [steps] = useState([
-    <Button onClick={() => history.push("/shipping/address")}>Address</Button>,
-    <Button onClick={() => history.push("/shipping/delivery")}>
+    <Button
+      style={grayButton}
+      onClick={() => history.push("/shipping/address")}
+    >
+      Address
+    </Button>,
+    <Button
+      style={grayButton}
+      onClick={() => history.push("/shipping/delivery")}
+    >
       Delivery
     </Button>,
-    <Button>Review</Button>,
-    <Button>Payment</Button>,
+    <Button style={grayButton} onClick={() => history.push("/shipping/review")}>
+      Review
+    </Button>,
+    <Button style={grayButton}>Payment</Button>,
   ]);
 
   const [stepsBlack] = useState([
@@ -35,7 +46,12 @@ const ShippingFlow: React.FC<props> = ({ step }) => {
     >
       Delivery
     </Button>,
-    <Button style={blackButton}>Review</Button>,
+    <Button
+      style={blackButton}
+      onClick={() => history.push("/shipping/review")}
+    >
+      Review
+    </Button>,
     <Button style={blackButton}>Payment</Button>,
   ]);
 
@@ -43,10 +59,11 @@ const ShippingFlow: React.FC<props> = ({ step }) => {
     <div>
       <ButtonGroup
         variant="contained"
-        // color="black"
         aria-label="contained primary button group"
         style={{
           justifySelf: "center",
+          // minWidth: "400px",
+          display: "flex",
         }}
       >
         {steps.map((stp, idx) => {
