@@ -1,14 +1,14 @@
 .reviewView {
-  width: 65%;
+  width: 80%;
   margin: 0px auto;
   margin-top: 2%;
 }
 
-.reviewView__container {
+/* .reviewView__container {
   max-width: 400px;
   margin: 0px auto;
   margin-top: 10%;
-}
+} */
 
 .reviewView__shippingFlow {
   margin-bottom: 20px;

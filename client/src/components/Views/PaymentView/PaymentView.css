@@ -1,14 +1,14 @@
 .paymentView {
-  width: 65%;
+  width: 80%;
   margin: 0px auto;
   margin-top: 2%;
 }
 
-.paymentView__container {
+/* .paymentView__container {
   max-width: 400px;
   margin: 0px auto;
   margin-top: 10%;
-}
+} */
 
 .paymentView__shippingFlow {
   margin-bottom: 20px;
@@ -36,4 +36,9 @@
 .paymentView--bottomLine {
   display: flex;
   justify-content: space-between;
+}
+
+.paymentView--bottomLine__section {
+  display: flex;
+  flex-direction: column;
 }

@@ -4,6 +4,7 @@ import Button from "@material-ui/core/Button";
 import { observer } from "mobx-react-lite";
 import { rootStore } from "../../../RootStore";
 import "./PaymentView.css";
+import OrderSummary from "../../OrderSumary/OrderSummary";
 
 interface props {
   ShippingFlow: React.FC<{}>;
@@ -12,72 +13,84 @@ interface props {
 const PaymentView: React.FC<props> = observer(({ ShippingFlow }) => {
   return (
     <div className="paymentView">
-      <div className="paymentView__container">
-        <div className="paymentView__shippingFlow">
-          <ShippingFlow />
-        </div>
-        <div className="paymentView__form__body">
-          <label htmlFor="name" className="paymentView__label">
-            Name on Card
-          </label>
-          <input
-            name="name"
-            placeholder="Enter Name"
-            type="text"
-            // ref={register({ required: true })}
-            className="paymentView__form__input"
-            id="name"
-            // value={address}
-            // onChange={(e) => handleAddressChange(e)}
-          />
+      <div
+        className="paymentView__container"
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <div className="paymentView__left" style={{ flex: 0.6 }}>
+          <div className="paymentView__shippingFlow">
+            <ShippingFlow />
+          </div>
+          <div className="paymentView__form__body">
+            <label htmlFor="name" className="paymentView__label">
+              Name on Card
+            </label>
+            <input
+              name="name"
+              placeholder="Enter Name"
+              type="text"
+              // ref={register({ required: true })}
+              className="paymentView__form__input"
+              id="name"
+              // value={address}
+              // onChange={(e) => handleAddressChange(e)}
+            />
 
-          <label htmlFor="cardNumber" className="paymentView__label">
-            Card Number
-          </label>
-          <input
-            name="cardNumber"
-            placeholder="1234 1234 1234 1234"
-            type="text"
-            // ref={register({ required: true })}
-            className="paymentView__form__input"
-            id="cardNumber"
-            // value={address}
-            // onChange={(e) => handleAddressChange(e)}
-          />
+            <label htmlFor="cardNumber" className="paymentView__label">
+              Card Number
+            </label>
+            <input
+              name="cardNumber"
+              placeholder="1234 1234 1234 1234"
+              type="text"
+              // ref={register({ required: true })}
+              className="paymentView__form__input"
+              id="cardNumber"
+              // value={address}
+              // onChange={(e) => handleAddressChange(e)}
+            />
 
-          <div className="paymentView--bottomLine">
-            <div className="paymentView--bottomLine__section">
-              <label htmlFor="expireDate" className="paymentView__label">
-                Expiration date
-              </label>
-              <input
-                name="expireDate"
-                placeholder="MM/YY"
-                type="text"
-                // ref={register({ required: true })}
-                className="paymentView__form__input"
-                id="cardNumber"
-                // value={address}
-                // onChange={(e) => handleAddressChange(e)}
-              />
-            </div>
+            <div className="paymentView--bottomLine">
+              <div className="paymentView--bottomLine__section">
+                <label htmlFor="expireDate" className="paymentView__label">
+                  Expiration date
+                </label>
+                <input
+                  name="expireDate"
+                  placeholder="MM/YY"
+                  type="text"
+                  // ref={register({ required: true })}
+                  className="paymentView__form__input"
+                  id="cardNumber"
+                  // value={address}
+                  // onChange={(e) => handleAddressChange(e)}
+                />
+              </div>
 
-            <div className="paymentView--bottomLine__section">
-              <label htmlFor="cvc" className="paymentView__label">
-                CVC
-              </label>
-              <input
-                name="cvc"
-                placeholder="CVC"
-                type="text"
-                // ref={register({ required: true })}
-                className="paymentView__form__input"
-                id="cvc"
-                // value={address}
-                // onChange={(e) => handleAddressChange(e)}
-              />
+              <div className="paymentView--bottomLine__section">
+                <label htmlFor="cvc" className="paymentView__label">
+                  CVC
+                </label>
+                <input
+                  name="cvc"
+                  placeholder="CVC"
+                  type="text"
+                  // ref={register({ required: true })}
+                  className="paymentView__form__input"
+                  id="cvc"
+                  // value={address}
+                  // onChange={(e) => handleAddressChange(e)}
+                />
+              </div>
             </div>
           </div>
+        </div>
+
+        <div className="paymentView__right" style={{ flex: 0.3 }}>
+          <OrderSummary />
         </div>
       </div>
     </div>
