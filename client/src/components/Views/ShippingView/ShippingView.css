@@ -1,14 +1,14 @@
 .shippingView {
-  width: 65%;
+  width: 80%;
   margin: 0px auto;
   margin-top: 2%;
 }
 
-.shippingView__container {
+/* .shippingView__container {
   max-width: 400px;
   margin: 0px auto;
   margin-top: 10%;
-}
+} */
 
 .shippingView__form {
   display: flex;
