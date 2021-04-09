@@ -14,7 +14,7 @@ const UserProfileView: React.FC<RouteComponentProps> = observer(
   ({ history }) => {
     const root = useContext(rootStore);
     const userStore = root.UserStore;
-    const { userInfo, updateUserInfo } = userStore;
+    const { userInfo } = userStore;
 
     return (
       <div className="userProfileView">
@@ -71,6 +71,7 @@ const UserProfileView: React.FC<RouteComponentProps> = observer(
                 <div className="userProfileView__listItem">
                   <div className="userProfileView__listItem__left">
                     <h4>Password</h4>
+                    <p>********</p>
                   </div>
                   <div className="userProfileView__listItem__right">
                     <Button

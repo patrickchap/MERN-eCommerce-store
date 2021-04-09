@@ -87,7 +87,18 @@ export class CartStore {
     }
   };
 
+  shippingAndHandlingFromLocalStorage = () => {
+    let sa = 0;
+    let saString = localStorage.getItem("shippingAndHandling");
+    if (saString) {
+      sa = JSON.parse(saString);
+      return sa;
+    }
+  };
+
   @observable cartItems: cartItem[] = this.itemsFromStorage() || [];
+  @observable shippingAndHandling: number =
+    this.shippingAndHandlingFromLocalStorage() || 0;
 
   @observable
   shippingDetail: shippingDetail = this.addressFromLocalStorage() || {
@@ -95,6 +106,12 @@ export class CartStore {
     City: "",
     PostalCode: 0,
     Country: "",
+  };
+
+  @action updateShippingAndHandling = (sa: number) => {
+    localStorage.removeItem("shippingAndHandling");
+    localStorage.setItem("shippingAndHandling", JSON.stringify(sa));
+    this.shippingAndHandling = sa;
   };
 
   @action updateShippingDetail = (detail: shippingDetail) => {

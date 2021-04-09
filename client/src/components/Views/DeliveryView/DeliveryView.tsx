@@ -1,11 +1,12 @@
 import Button from "@material-ui/core/Button";
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { observer } from "mobx-react-lite";
 import Alert from "@material-ui/lab/Alert";
 import "./DeliveryView.css";
 import OrderSummary from "../../OrderSumary/OrderSummary";
+import { rootStore } from "../../../RootStore";
 
 interface props {
   ShippingFlow: React.FC<{}>;
@@ -61,9 +62,10 @@ const formatDate = (date: Date) => {
 
 const DeliveryView: React.FC<props> = observer(({ ShippingFlow }) => {
   const history = useHistory();
-
+  const root = useContext(rootStore);
+  const { CartStore } = root;
+  const { updateShippingAndHandling, shippingAndHandling } = CartStore;
   const onSubmit = (e: Inputs) => {
-    console.log(e);
     history.push("/shipping/review");
   };
 
@@ -97,6 +99,8 @@ const DeliveryView: React.FC<props> = observer(({ ShippingFlow }) => {
                     type="radio"
                     name="delivery"
                     value="27.3"
+                    checked={27.3 === shippingAndHandling}
+                    onClick={() => updateShippingAndHandling(27.3)}
                     ref={register({
                       required: true,
                     })}
@@ -112,6 +116,8 @@ const DeliveryView: React.FC<props> = observer(({ ShippingFlow }) => {
                     type="radio"
                     name="delivery"
                     value="16.3"
+                    checked={16.3 === shippingAndHandling}
+                    onClick={() => updateShippingAndHandling(16.3)}
                     ref={register({
                       required: true,
                     })}
@@ -128,6 +134,8 @@ const DeliveryView: React.FC<props> = observer(({ ShippingFlow }) => {
                     type="radio"
                     name="delivery"
                     value="7.58"
+                    checked={7.58 === shippingAndHandling}
+                    onClick={() => updateShippingAndHandling(7.58)}
                     ref={register({
                       required: true,
                     })}
