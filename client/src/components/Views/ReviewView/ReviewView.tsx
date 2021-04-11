@@ -13,7 +13,7 @@ interface props {
 const ReviewView: React.FC<props> = observer(({ ShippingFlow }) => {
   const root = useContext(rootStore);
   const { CartStore } = root;
-  const { cartItems } = CartStore;
+  const { cartItems, updateReviewFlow } = CartStore;
   let history = useHistory();
 
   return (
@@ -64,7 +64,10 @@ const ReviewView: React.FC<props> = observer(({ ShippingFlow }) => {
                 backgroundColor: "black",
                 color: "white",
               }}
-              onClick={() => history.push("/shipping/payment")}
+              onClick={() => {
+                updateReviewFlow();
+                history.push("/shipping/payment");
+              }}
             >
               Continue to Payment
             </Button>

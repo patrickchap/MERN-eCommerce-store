@@ -64,8 +64,13 @@ const DeliveryView: React.FC<props> = observer(({ ShippingFlow }) => {
   const history = useHistory();
   const root = useContext(rootStore);
   const { CartStore } = root;
-  const { updateShippingAndHandling, shippingAndHandling } = CartStore;
+  const {
+    updateShippingAndHandling,
+    shippingAndHandling,
+    updateDeliveryFlow,
+  } = CartStore;
   const onSubmit = (e: Inputs) => {
+    updateDeliveryFlow();
     history.push("/shipping/review");
   };
 

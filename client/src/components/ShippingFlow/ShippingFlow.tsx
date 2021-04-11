@@ -1,9 +1,11 @@
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { observer } from "mobx-react-lite";
 import { NavLink } from "react-router-dom";
 import "./ShippingFlow.css";
 import { useHistory } from "react-router-dom";
+import { rootStore } from "../../RootStore";
 
 interface props {
   step: number;
@@ -12,7 +14,10 @@ interface props {
 const blackButton = { backgroundColor: "black", color: "white", flex: ".25" };
 const grayButton = { flex: ".25" };
 
-const ShippingFlow: React.FC<props> = ({ step }) => {
+const ShippingFlow: React.FC<props> = observer(({ step }) => {
+  const root = useContext(rootStore);
+  const { deliveryFlow, reviewFlow, paymentFlow } = root.CartStore;
+
   let history = useHistory();
   const [steps] = useState([
     <Button
@@ -24,15 +29,21 @@ const ShippingFlow: React.FC<props> = ({ step }) => {
     <Button
       style={grayButton}
       onClick={() => history.push("/shipping/delivery")}
+      disabled={!deliveryFlow}
     >
       Delivery
     </Button>,
-    <Button style={grayButton} onClick={() => history.push("/shipping/review")}>
+    <Button
+      style={grayButton}
+      onClick={() => history.push("/shipping/review")}
+      disabled={!reviewFlow}
+    >
       Review
     </Button>,
     <Button
       style={grayButton}
       onClick={() => history.push("/shipping/payment")}
+      disabled={!paymentFlow}
     >
       Payment
     </Button>,
@@ -83,6 +94,6 @@ const ShippingFlow: React.FC<props> = ({ step }) => {
       </ButtonGroup>
     </div>
   );
-};
+});
 
 export default ShippingFlow;

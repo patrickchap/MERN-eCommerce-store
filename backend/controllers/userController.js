@@ -80,4 +80,16 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   });
 });
 
-module.exports = { authUser, getUserProfile, postNewUser, updateUserProfile };
+//admin only
+const getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({});
+  res.send(users);
+});
+
+module.exports = {
+  authUser,
+  getUserProfile,
+  postNewUser,
+  updateUserProfile,
+  getUsers,
+};

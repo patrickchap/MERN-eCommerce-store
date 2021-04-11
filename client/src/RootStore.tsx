@@ -43,6 +43,12 @@ interface userInfo {
   token: string;
 }
 
+interface putUserInput {
+  name?: string;
+  email?: string;
+  password?: string;
+}
+
 export class RootStore {
   ProductStore: ProductStore;
   CartStore: CartStore;
@@ -106,6 +112,21 @@ export class CartStore {
     City: "",
     PostalCode: 0,
     Country: "",
+  };
+
+  @observable addressFlow: boolean = false;
+  @observable deliveryFlow: boolean = false;
+  @observable reviewFlow: boolean = false;
+  @observable paymentFlow: boolean = false;
+
+  @action updateDeliveryFlow = () => {
+    this.deliveryFlow = true;
+  };
+  @action updateReviewFlow = () => {
+    this.reviewFlow = true;
+  };
+  @action updatePaymentFlow = () => {
+    this.paymentFlow = true;
   };
 
   @action updateShippingAndHandling = (sa: number) => {
@@ -172,8 +193,29 @@ export class UserStore {
 
   @observable userInfo: userInfo | undefined = userInfoFromStorage;
 
+  @action putUserInfo = (userInfo: putUserInput) => {
+    const config = {
+      headers: { Authorization: "Bearer " + this.userInfo?.token },
+    };
+    axios
+      .put("/api/users/profile", userInfo, config)
+      .then((value) => value.data)
+      .then((data) => {
+        console.log(data);
+        localStorage.removeItem("userInfo");
+        localStorage.setItem("userInfo", JSON.stringify(data));
+        this.userInfo = data;
+      });
+  };
+
   @action updateUserInfo = (userInfo: userInfo | undefined) => {
     this.userInfo = userInfo;
+    // const { data } = await axios.put("/api/users/profile", {
+    //   headers: { Authorization: "Bearer " + this.userInfo?.token },
+    // });
+    // localStorage.removeItem("userInfo");
+    // localStorage.setItem("userInfo", JSON.stringify(data));
+    // this.userInfo = data;
   };
 }
 

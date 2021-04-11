@@ -7,6 +7,13 @@ import CardContent from "@material-ui/core/CardContent";
 import { rootStore } from "../../RootStore";
 import NumberFormat from "react-number-format";
 
+const rowStyles = {
+  paddingBottom: "10px",
+  paddingTop: "10px",
+  display: "flex",
+  justifyContent: "space-between",
+};
+
 const OrderSummary: React.FC = observer(() => {
   const root = useContext(rootStore);
   const { cartItems, shippingAndHandling } = root.CartStore;
@@ -31,10 +38,7 @@ const OrderSummary: React.FC = observer(() => {
           }}
         />
         <CardContent style={{ display: "flex", flexDirection: "column" }}>
-          <div
-            className="row"
-            style={{ display: "flex", justifyContent: "space-between" }}
-          >
+          <div className="row" style={rowStyles}>
             <div className="row--left">Order Subtotal</div>
             <div className="row--right">
               {
@@ -48,10 +52,7 @@ const OrderSummary: React.FC = observer(() => {
             </div>
           </div>
           <Divider />
-          <div
-            className="row"
-            style={{ display: "flex", justifyContent: "space-between" }}
-          >
+          <div className="row" style={rowStyles}>
             <div className="row--left">Shipping and Handling</div>
             <div className="row--right">
               {
@@ -66,11 +67,10 @@ const OrderSummary: React.FC = observer(() => {
           </div>
           <Divider />
 
-          <div
-            className="row"
-            style={{ display: "flex", justifyContent: "space-between" }}
-          >
-            <div className="row--left">Total</div>
+          <div className="row" style={rowStyles}>
+            <div className="row--left">
+              <strong>Total</strong>
+            </div>
             <div className="row--right">
               {
                 <NumberFormat
