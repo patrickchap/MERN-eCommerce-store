@@ -7,13 +7,14 @@ import { useForm } from "react-hook-form";
 import Rating from "@material-ui/lab/Rating";
 import { CSSProperties } from "@material-ui/styles";
 import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router-dom";
 
 interface params {
   id: string | undefined;
 }
-interface inputs {
+interface productReviewInputs {
   rating: number;
-  review: string;
+  comment: string;
 }
 
 const styles = {
@@ -42,9 +43,17 @@ const styles = {
 const ProductReviewView: React.FC = observer(() => {
   const { id } = useParams<params>();
   const root = useContext(rootStore);
-  const { product, loadProduct } = root.ProductStore;
+  const {
+    product,
+    loadProduct,
+    postProductReview,
+    loadProducts,
+  } = root.ProductStore;
+  const { userInfo } = root.UserStore;
+
   const [value, setValue] = React.useState<number>(0);
-  const { register, handleSubmit, errors } = useForm<inputs>();
+  const { register, handleSubmit, errors } = useForm<productReviewInputs>();
+  const history = useHistory();
 
   useEffect(() => {
     if (id) {
@@ -52,13 +61,17 @@ const ProductReviewView: React.FC = observer(() => {
     }
   }, [id, loadProduct]);
 
-  const onSubmit = (e: inputs) => {
-    const newRating: inputs = {
+  const onSubmit = (e: productReviewInputs) => {
+    const newRating: productReviewInputs = {
       rating: value,
-      review: e.review,
+      comment: e.comment,
     };
-    console.log(newRating);
-    console.log(">>>>>>>>>>>>>>");
+    if (id && userInfo?.token) {
+      console.log(newRating);
+      postProductReview(newRating, id, userInfo.token);
+      //   loadProducts();
+      history.push(`/product/${id}`);
+    }
   };
 
   return (
@@ -78,11 +91,11 @@ const ProductReviewView: React.FC = observer(() => {
             />
           </div>
 
-          <label htmlFor="review">
+          <label htmlFor="comment">
             <strong>Add a written review</strong>
           </label>
           <textarea
-            name="review"
+            name="comment"
             id="review"
             style={styles.textarea}
             ref={register({ required: true })}

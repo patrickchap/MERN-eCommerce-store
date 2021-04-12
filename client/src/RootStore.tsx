@@ -17,6 +17,11 @@ interface prod {
   reviews: Array<any>;
 }
 
+interface productReviewInputs {
+  rating: number;
+  comment: string;
+}
+
 interface shippingDetail {
   Address: string;
   City: string;
@@ -255,6 +260,27 @@ export class ProductStore {
   @action loadProduct = async (id: string) => {
     const { data } = await axios.get(`/api/products/${id}`);
     this.product = data;
+  };
+
+  postProductReview = async (
+    review: productReviewInputs,
+    id: string,
+    token: string
+  ) => {
+    axios
+      .post(
+        `/api/products/${id}/review`,
+        { rating: review.rating, comment: review.comment },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+      });
   };
 }
 // const rootStore = new RootStore();
