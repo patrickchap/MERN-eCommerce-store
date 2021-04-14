@@ -17,6 +17,7 @@ import DeliveryView from "./components/Views/DeliveryView/DeliveryView";
 import ReviewView from "./components/Views/ReviewView/ReviewView";
 import PaymentView from "./components/Views/PaymentView/PaymentView";
 import ProductReviewView from "./components/Views/ProductReviewView/ProductReviewView";
+import { UserListView } from "./components/Views/UserListView/UserListView";
 
 const App: React.FC = observer(() => {
   const root = useContext(rootStore);
@@ -84,6 +85,8 @@ const App: React.FC = observer(() => {
                 path="/update/:infoToUpdate"
                 component={UpdateUserInfoView}
               />
+
+              <Route path="/userList" component={UserListView} />
             </Switch>
           </div>
         </main>

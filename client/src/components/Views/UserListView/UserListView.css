@@ -1,0 +1,27 @@
+.userTable {
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+.userTable {
+  border-collapse: collapse;
+}
+
+.userTable thead td {
+  height: 2rem;
+  padding: 9px;
+}
+
+.userTable tr,
+.userTable td {
+  border: 1px solid #ddd;
+  padding: 9px;
+}
+
+.userTable tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+.userTable tr:hover {
+  background-color: #ddd;
+}

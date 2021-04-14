@@ -29,7 +29,6 @@ const UpdateUserInfoView: React.FC<RouteComponentProps> = ({ history }) => {
   const { putUserInfo } = root.UserStore;
 
   const onSubmit = (e: putUserInfo) => {
-    console.log(e);
     putUserInfo(e);
   };
 

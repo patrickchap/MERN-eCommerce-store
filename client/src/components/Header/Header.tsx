@@ -10,6 +10,8 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { useHistory } from "react-router-dom";
 import Badge from "@material-ui/core/Badge";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 
 const Header: React.FC = observer(() => {
   const root = useContext(rootStore);
@@ -19,6 +21,7 @@ const Header: React.FC = observer(() => {
   let history = useHistory();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorElAdmin, setAnchorElAdmin] = useState<null | HTMLElement>(null);
 
   const getSubTotalItems = () => {
     let total: number = 0;
@@ -29,9 +32,16 @@ const Header: React.FC = observer(() => {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+  const handleClickAdmin = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorElAdmin(event.currentTarget);
+  };
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleCloseAdmin = () => {
+    setAnchorElAdmin(null);
   };
 
   const handleLogout = () => {
@@ -43,6 +53,11 @@ const Header: React.FC = observer(() => {
   const handleUserProfile = () => {
     history.push("/UserProfile");
     handleClose();
+  };
+
+  const handleUsersClick = () => {
+    history.push("/userList");
+    handleCloseAdmin();
   };
 
   return (
@@ -95,6 +110,11 @@ const Header: React.FC = observer(() => {
                   className="header__logout"
                 >
                   {userInfo.name}
+                  {!Boolean(anchorEl) ? (
+                    <ArrowDropDownIcon />
+                  ) : (
+                    <ArrowDropUpIcon />
+                  )}
                 </Button>
                 <Menu
                   id="simple-menu"
@@ -123,6 +143,35 @@ const Header: React.FC = observer(() => {
               </NavLink>
             )}
           </div>
+          {userInfo && userInfo.isAdmin && (
+            <div className="">
+              <Button
+                aria-controls="admin-menu"
+                aria-haspopup="true"
+                onClick={handleClickAdmin}
+                className="header__logout"
+              >
+                {userInfo.name}
+                {!Boolean(anchorElAdmin) ? (
+                  <ArrowDropDownIcon />
+                ) : (
+                  <ArrowDropUpIcon />
+                )}
+              </Button>
+
+              <Menu
+                id="adminMenu"
+                anchorEl={anchorElAdmin}
+                keepMounted
+                open={Boolean(anchorElAdmin)}
+                onClose={handleCloseAdmin}
+              >
+                <MenuItem onClick={handleUsersClick}>Users</MenuItem>
+                <MenuItem>Products</MenuItem>
+                <MenuItem>Orders</MenuItem>
+              </Menu>
+            </div>
+          )}
         </div>
       </div>
     </div>

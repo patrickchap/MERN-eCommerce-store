@@ -2,7 +2,6 @@ import React, { useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { rootStore } from "../../../RootStore";
 import { observer } from "mobx-react-lite";
-import { StylesProvider } from "@material-ui/styles";
 import { useForm } from "react-hook-form";
 import Rating from "@material-ui/lab/Rating";
 import { CSSProperties } from "@material-ui/styles";
@@ -43,12 +42,7 @@ const styles = {
 const ProductReviewView: React.FC = observer(() => {
   const { id } = useParams<params>();
   const root = useContext(rootStore);
-  const {
-    product,
-    loadProduct,
-    postProductReview,
-    loadProducts,
-  } = root.ProductStore;
+  const { product, loadProduct, postProductReview } = root.ProductStore;
   const { userInfo } = root.UserStore;
 
   const [value, setValue] = React.useState<number>(0);
@@ -59,7 +53,11 @@ const ProductReviewView: React.FC = observer(() => {
     if (id) {
       loadProduct(id);
     }
-  }, [id, loadProduct]);
+
+    if (!userInfo) {
+      history.push(`/login?redirect=/product/review/${id}`);
+    }
+  }, [history, id, loadProduct, userInfo]);
 
   const onSubmit = (e: productReviewInputs) => {
     const newRating: productReviewInputs = {
@@ -69,7 +67,6 @@ const ProductReviewView: React.FC = observer(() => {
     if (id && userInfo?.token) {
       console.log(newRating);
       postProductReview(newRating, id, userInfo.token);
-      //   loadProducts();
       history.push(`/product/${id}`);
     }
   };
@@ -78,7 +75,6 @@ const ProductReviewView: React.FC = observer(() => {
     <div className="productReviewView" style={styles.home}>
       <div className="productReviewView__description">
         <strong>{`Create a review for ${product.name}`}</strong>
-
         <form onSubmit={handleSubmit(onSubmit)} style={styles.form}>
           <div className="productReviewView__rating" style={styles.rating}>
             <Rating

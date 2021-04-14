@@ -198,6 +198,16 @@ export class UserStore {
 
   @observable userInfo: userInfo | undefined = userInfoFromStorage;
 
+  @observable userList: userInfo[] | undefined;
+
+  @action getUserList = async () => {
+    const config = {
+      headers: { Authorization: "Bearer " + this.userInfo?.token },
+    };
+    const { data } = await axios.get("/api/users", config);
+    this.userList = data;
+  };
+
   @action putUserInfo = (userInfo: putUserInput) => {
     const config = {
       headers: { Authorization: "Bearer " + this.userInfo?.token },
