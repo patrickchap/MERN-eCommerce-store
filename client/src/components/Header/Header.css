@@ -27,23 +27,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  font-weight: bold;
 }
 
-.navlink:visited {
-  color: white;
+.header__brand {
+  font-weight: 800;
+  cursor: pointer;
 }
-.navlink {
-  text-decoration: none;
+
+.admin--btn,
+.userName {
+  display: flex;
 }
-.navlink:hover {
+
+.admin--btn:hover,
+.userName:hover,
+.cart__inner:hover,
+.header__brand:hover {
+  display: flex;
+  flex-direction: row;
   color: rgb(192, 192, 192);
-}
-#header_Brand {
-  font-weight: 800 !important;
-  color: white;
-}
-#header_Brand:hover {
-  color: rgb(192, 192, 192) !important;
 }
 
 .header__logout {

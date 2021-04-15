@@ -6,6 +6,8 @@ const {
   postNewUser,
   updateUserProfile,
   getUsers,
+  changeUserAdminRights,
+  deleteUser,
 } = require("../controllers/userController");
 const { protect, protectAdmin } = require("../middleware/authMiddleware");
 
@@ -16,5 +18,7 @@ router
   .put(protect, updateUserProfile);
 
 router.route("/").post(postNewUser).get(protectAdmin, getUsers);
+router.route("/makeAdmin").put(protectAdmin, changeUserAdminRights);
+router.route("/delete").delete(protectAdmin, deleteUser);
 
 module.exports = router;

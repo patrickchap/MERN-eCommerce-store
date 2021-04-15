@@ -60,61 +60,51 @@ const Header: React.FC = observer(() => {
     handleCloseAdmin();
   };
 
+  // useEffect(() => {}, [userInfo]);
+
   return (
     <div className="header">
       <div className="header__container">
         <div className="header__container__left">
-          <NavLink
-            to="/"
-            id="header_Brand"
-            className="navlink"
-            activeStyle={{
-              fontWeight: "bold",
-              color: "white",
-            }}
-          >
+          <div className="header__brand" onClick={() => history.push("/")}>
             Photo Store
-          </NavLink>
+          </div>
+
+          {/* </NavLink> */}
         </div>
         <div className="header__container__right">
           <div className="header__container__right__cart">
-            <NavLink
-              to="/cart"
-              className="navlink"
-              activeStyle={{
-                fontWeight: "bold",
-                color: "white",
-              }}
-            >
-              <div className="cart__inner">
-                <Badge
-                  badgeContent={getSubTotalItems()}
-                  color="secondary"
-                  style={{ marginRight: "5px" }}
-                  invisible={getSubTotalItems() === 0}
-                >
-                  <ShoppingCartIcon />
-                </Badge>
-                Cart
-              </div>
-            </NavLink>
+            <div className="cart__inner" onClick={() => history.push("/cart")}>
+              <Badge
+                badgeContent={getSubTotalItems()}
+                color="secondary"
+                style={{ marginRight: "5px" }}
+                invisible={getSubTotalItems() === 0}
+              >
+                <ShoppingCartIcon />
+              </Badge>
+              Cart
+            </div>
           </div>
           <div className="header__container__right__signin">
             {userInfo ? (
               <div className="signin__inner">
-                <PersonIcon />
                 <Button
                   aria-controls="simple-menu"
                   aria-haspopup="true"
                   onClick={handleClick}
                   className="header__logout"
+                  style={{ fontWeight: "bold" }}
                 >
-                  {userInfo.name}
-                  {!Boolean(anchorEl) ? (
-                    <ArrowDropDownIcon />
-                  ) : (
-                    <ArrowDropUpIcon />
-                  )}
+                  <div className="userName">
+                    <PersonIcon style={{ paddingRight: "2px" }} />
+                    {userInfo.name}
+                    {!Boolean(anchorEl) ? (
+                      <ArrowDropDownIcon />
+                    ) : (
+                      <ArrowDropUpIcon />
+                    )}
+                  </div>
                 </Button>
                 <Menu
                   id="simple-menu"
@@ -122,25 +112,20 @@ const Header: React.FC = observer(() => {
                   keepMounted
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
+                  style={{ fontWeight: "bold" }}
                 >
                   <MenuItem onClick={handleUserProfile}>Profile</MenuItem>
                   <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>
               </div>
             ) : (
-              <NavLink
-                to="/login"
-                className="navlink"
-                activeStyle={{
-                  fontWeight: "bold",
-                  color: "white",
-                }}
+              <div
+                className="signin__inner"
+                onClick={() => history.push("/login")}
               >
-                <div className="signin__inner">
-                  <PersonIcon />
-                  Sign In
-                </div>
-              </NavLink>
+                <PersonIcon />
+                Sign In
+              </div>
             )}
           </div>
           {userInfo && userInfo.isAdmin && (
@@ -150,13 +135,17 @@ const Header: React.FC = observer(() => {
                 aria-haspopup="true"
                 onClick={handleClickAdmin}
                 className="header__logout"
+                style={{ fontWeight: "bold" }}
+                // id="admin--btn"
               >
-                {userInfo.name}
-                {!Boolean(anchorElAdmin) ? (
-                  <ArrowDropDownIcon />
-                ) : (
-                  <ArrowDropUpIcon />
-                )}
+                <div className="admin--btn">
+                  Admin
+                  {!Boolean(anchorElAdmin) ? (
+                    <ArrowDropDownIcon />
+                  ) : (
+                    <ArrowDropUpIcon />
+                  )}
+                </div>
               </Button>
 
               <Menu

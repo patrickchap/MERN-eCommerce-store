@@ -86,10 +86,45 @@ const getUsers = asyncHandler(async (req, res) => {
   res.send(users);
 });
 
+//admin only
+const changeUserAdminRights = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.body._id);
+  if (user) {
+    user.isAdmin = !user.isAdmin;
+  }
+
+  const updatedUser = await user.save();
+  res.json({
+    _id: updatedUser._id,
+    name: updatedUser.name,
+    email: updatedUser.email,
+    isAdmin: updatedUser.isAdmin,
+    token: updatedUser.generateJWT(),
+  });
+});
+
+//admin only
+const deleteUser = asyncHandler(async (req, res) => {
+  console.log("deleteUser");
+  console.log({ _id: req.body._id });
+
+  const result = await User.deleteOne({ _id: req.body._id });
+  if (result.deletedCount === 1) {
+    console.log("Deleted");
+
+    res.json({ msg: "User Deleted" });
+  } else {
+    console.log("Not Deleted");
+    res.json({ msg: "No documents matched the query. Deleted 0 documents." });
+  }
+});
+
 module.exports = {
   authUser,
   getUserProfile,
   postNewUser,
   updateUserProfile,
   getUsers,
+  changeUserAdminRights,
+  deleteUser,
 };

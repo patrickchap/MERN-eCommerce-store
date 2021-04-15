@@ -232,6 +232,27 @@ export class UserStore {
     // localStorage.setItem("userInfo", JSON.stringify(data));
     // this.userInfo = data;
   };
+
+  updateIsAdmin = async (id: string) => {
+    const { data } = await axios.put(
+      "/api/users/makeAdmin",
+      { _id: id },
+      {
+        headers: { Authorization: "Bearer " + this.userInfo?.token },
+      }
+    );
+  };
+
+  deleteUser = async (id: string) => {
+    axios.delete("/api/users/delete", {
+      headers: {
+        Authorization: "Bearer " + this.userInfo?.token,
+      },
+      data: {
+        _id: id,
+      },
+    });
+  };
 }
 
 export class ProductStore {

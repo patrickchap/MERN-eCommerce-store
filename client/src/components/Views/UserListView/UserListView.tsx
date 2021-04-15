@@ -17,7 +17,13 @@ const styles = {
 
 export const UserListView: React.FC = observer(() => {
   const root = useContext(rootStore);
-  const { userList, getUserList, userInfo } = root.UserStore;
+  const {
+    userList,
+    getUserList,
+    userInfo,
+    updateIsAdmin,
+    deleteUser,
+  } = root.UserStore;
   const history = useHistory();
 
   useEffect(() => {
@@ -30,6 +36,7 @@ export const UserListView: React.FC = observer(() => {
 
   return (
     <div className="userListView" style={styles.home}>
+      <h2>Users</h2>
       <table className="userTable">
         <thead>
           {/* <tr className="userTable__tr"> */}
@@ -45,13 +52,30 @@ export const UserListView: React.FC = observer(() => {
               <td>{user.email}</td>
               <td>
                 {user.isAdmin ? (
-                  <CheckBoxIcon style={{ cursor: "pointer" }} />
+                  <CheckBoxIcon
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      if (user.name !== userInfo?.name) {
+                        updateIsAdmin(user._id);
+                      }
+                    }}
+                  />
                 ) : (
-                  <CheckBoxOutlineBlankIcon style={{ cursor: "pointer" }} />
+                  <CheckBoxOutlineBlankIcon
+                    style={{ cursor: "pointer" }}
+                    onClick={() => updateIsAdmin(user._id)}
+                  />
                 )}
               </td>
               <td>
-                <DeleteForeverIcon style={{ cursor: "pointer" }} />
+                <DeleteForeverIcon
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    if (user.name !== userInfo?.name) {
+                      deleteUser(user._id);
+                    }
+                  }}
+                />
               </td>
             </tr>
           ))}
