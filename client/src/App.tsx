@@ -19,6 +19,7 @@ import PaymentView from "./components/Views/PaymentView/PaymentView";
 import ProductReviewView from "./components/Views/ProductReviewView/ProductReviewView";
 import { UserListView } from "./components/Views/UserListView/UserListView";
 import ProductListView from "./components/Views/ProductListView/ProductListView";
+import EditProductsView from "./components/Views/EditProductsView/EditProductsView";
 
 const App: React.FC = observer(() => {
   const root = useContext(rootStore);
@@ -89,6 +90,7 @@ const App: React.FC = observer(() => {
 
               <Route path="/userList" component={UserListView} />
               <Route path="/productsList" component={ProductListView} />
+              <Route path="/products/edit/:id" component={EditProductsView} />
             </Switch>
           </div>
         </main>

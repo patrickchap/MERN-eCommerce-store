@@ -3,6 +3,7 @@ import { rootStore } from "../../../RootStore";
 import { observer } from "mobx-react-lite";
 import "./ProductListView.css";
 import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router-dom";
 
 const styles = {
   home: {
@@ -15,9 +16,10 @@ const styles = {
 const ProductListView: React.FC = observer(() => {
   const root = useContext(rootStore);
   const { products } = root.ProductStore;
+  const history = useHistory();
 
   const createProduct = () => {
-    console.log("create product");
+    history.push("/products/edit/1");
   };
 
   return (
