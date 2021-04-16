@@ -1,0 +1,34 @@
+.productsTable {
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+.productsTable {
+  border-collapse: collapse;
+}
+
+.productsTable thead td {
+  height: 2rem;
+  padding: 9px;
+}
+
+.productsTable tr,
+.productsTable td {
+  border: 1px solid #ddd;
+  padding: 9px;
+}
+
+.productsTable tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+.productsTable tr:hover {
+  background-color: #ddd;
+}
+
+.productList__top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}

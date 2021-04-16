@@ -60,6 +60,11 @@ const Header: React.FC = observer(() => {
     handleCloseAdmin();
   };
 
+  const handleProductsClick = () => {
+    history.push("/productsList");
+    handleCloseAdmin();
+  };
+
   // useEffect(() => {}, [userInfo]);
 
   return (
@@ -156,7 +161,7 @@ const Header: React.FC = observer(() => {
                 onClose={handleCloseAdmin}
               >
                 <MenuItem onClick={handleUsersClick}>Users</MenuItem>
-                <MenuItem>Products</MenuItem>
+                <MenuItem onClick={handleProductsClick}>Products</MenuItem>
                 <MenuItem>Orders</MenuItem>
               </Menu>
             </div>
