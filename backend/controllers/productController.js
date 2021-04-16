@@ -47,6 +47,7 @@ const postProductReview = asyncHandler(async (req, res) => {
 });
 
 const createNewProduct = asyncHandler(async (req, res) => {
+  console.log(">>>>> createNewProduct");
   let newProduct = {
     user: req.user._id,
     name: "createdName",
@@ -57,8 +58,8 @@ const createNewProduct = asyncHandler(async (req, res) => {
     reviews: [],
   };
   try {
-    await Product.insertMany([newProduct]);
-    res.send("Product Created");
+    let product = await Product.create(newProduct);
+    res.json(product);
   } catch (err) {
     console.error(err);
     res.status(400);

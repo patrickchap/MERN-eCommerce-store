@@ -313,6 +313,20 @@ export class ProductStore {
         console.log(res.data);
       });
   };
+
+  createNewProduct = async (token: string) => {
+    const { data } = await axios.post(
+      `/api/products/create`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return data._id;
+  };
 }
+
 // const rootStore = new RootStore();
 export const rootStore = createContext(new RootStore());

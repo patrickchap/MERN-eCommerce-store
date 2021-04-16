@@ -15,11 +15,19 @@ const styles = {
 
 const ProductListView: React.FC = observer(() => {
   const root = useContext(rootStore);
-  const { products } = root.ProductStore;
+  const { userInfo } = root.UserStore;
+  const { products, createNewProduct } = root.ProductStore;
   const history = useHistory();
 
   const createProduct = () => {
-    history.push("/products/edit/1");
+    if (userInfo?._id) {
+      createNewProduct(userInfo?.token).then((response) =>
+        history.push(`/products/edit/${response}`)
+      );
+      //   const { data } = await createNewProduct(userInfo?.token);
+      //   console.log(data);
+      //   history.push(`/products/edit/${id}`);
+    }
   };
 
   return (
