@@ -54,6 +54,16 @@ interface putUserInput {
   password?: string;
 }
 
+interface updateProduct {
+  name: string;
+  price: number;
+  countInStock: number;
+  image: string;
+  category: string;
+  subcategory: string;
+  description: string;
+}
+
 export class RootStore {
   ProductStore: ProductStore;
   CartStore: CartStore;
@@ -216,7 +226,6 @@ export class UserStore {
       .put("/api/users/profile", userInfo, config)
       .then((value) => value.data)
       .then((data) => {
-        console.log(data);
         localStorage.removeItem("userInfo");
         localStorage.setItem("userInfo", JSON.stringify(data));
         this.userInfo = data;
@@ -325,6 +334,29 @@ export class ProductStore {
       }
     );
     return data._id;
+  };
+
+  deleteProduct = async (token: string, id: number) => {
+    axios.delete(`/api/products/delete/${id}`, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+  };
+
+  updateProduct = async (token: string, product: updateProduct, id: string) => {
+    const config = {
+      headers: { Authorization: "Bearer " + token },
+    };
+    axios
+      .put(`/api/products/update/${id}`, product, config)
+      .then((value) => value.data)
+      .then((data) => {
+        console.log(data);
+        // localStorage.removeItem("userInfo");
+        // localStorage.setItem("userInfo", JSON.stringify(data));
+        // this.userInfo = data;
+      });
   };
 }
 

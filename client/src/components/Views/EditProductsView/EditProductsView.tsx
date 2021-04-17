@@ -1,7 +1,11 @@
 import Button from "@material-ui/core/Button";
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import "./EditProductsView.css";
+import { rootStore } from "../../../RootStore";
+import { observer } from "mobx-react-lite";
+import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 
 const styles = {
   home: {
@@ -11,27 +15,54 @@ const styles = {
   },
 };
 
-const EditProductsView: React.FC = () => {
+interface updateProduct {
+  name: string;
+  price: number;
+  countInStock: number;
+  image: string;
+  category: string;
+  subcategory: string;
+  description: string;
+}
+
+const EditProductsView: React.FC = observer(() => {
   const { id } = useParams<{ id: string }>();
-  //   useEffect(() => {}, []);
+  const root = useContext(rootStore);
+  const { userInfo } = root.UserStore;
+  const { loadProduct, product, updateProduct } = root.ProductStore;
+  const history = useHistory();
+
+  useEffect(() => {
+    loadProduct(id);
+  }, [id, loadProduct]);
+
+  const { register, handleSubmit } = useForm<updateProduct>();
+
+  const onSubmit = (e: updateProduct) => {
+    if (userInfo) {
+      updateProduct(userInfo.token, e, id);
+      history.push("/productsList");
+    }
+  };
 
   return (
     <div className="editProductsView" style={styles.home}>
       <h2>Edit Product</h2>
-      <form className="editProductsView__form">
+      <form
+        className="editProductsView__form"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         {/* name */}
         <label htmlFor="name" className="shippingView__label">
           Name
         </label>
         <input
           name="name"
-          //   placeholder="Enter Country"
+          placeholder={product.name}
           type="text"
-          //   ref={register({ required: true })}
+          ref={register({ required: false })}
           className="shippingView__form__input"
           id="name"
-          //   value={country}
-          //   onChange={(e) => handleCountryChange(e)}
         />
         {/* price */}
         <label htmlFor="price" className="shippingView__label">
@@ -39,41 +70,35 @@ const EditProductsView: React.FC = () => {
         </label>
         <input
           name="price"
-          //   placeholder="Enter Country"
+          placeholder={`${product.price}`}
           type="text"
-          //   ref={register({ required: true })}
+          ref={register({ required: false })}
           className="shippingView__form__input"
           id="price"
-          //   value={country}
-          //   onChange={(e) => handleCountryChange(e)}
         />
-        {/* countInStock */}
-        <label htmlFor="count" className="shippingView__label">
+        {/* countInStockInStock */}
+        <label htmlFor="countInStock" className="shippingView__label">
           Count In Stock
         </label>
         <input
-          name="count"
-          //   placeholder="Enter Country"
+          name="countInStock"
+          placeholder={`${product.countInStock}`}
           type="text"
-          //   ref={register({ required: true })}
+          ref={register({ required: false })}
           className="shippingView__form__input"
           id="count"
-          //   value={country}
-          //   onChange={(e) => handleCountryChange(e)}
         />
         {/* image */}
-        <label htmlFor="imp" className="shippingView__label">
+        <label htmlFor="image" className="shippingView__label">
           Image
         </label>
         <input
-          name="imp"
-          //   placeholder="Enter Country"
+          name="image"
+          placeholder={product.image}
           type="text"
-          //   ref={register({ required: true })}
+          ref={register({ required: false })}
           className="shippingView__form__input"
-          id="imp"
-          //   value={country}
-          //   onChange={(e) => handleCountryChange(e)}
+          id="image"
         />
         {/* category */}
         <label htmlFor="category" className="shippingView__label">
@@ -81,13 +106,11 @@ const EditProductsView: React.FC = () => {
         </label>
         <input
           name="category"
-          //   placeholder="Enter Country"
+          placeholder={product.category}
           type="text"
-          //   ref={register({ required: true })}
+          ref={register({ required: false })}
           className="shippingView__form__input"
           id="category"
-          //   value={country}
-          //   onChange={(e) => handleCountryChange(e)}
         />
         {/* subcategory */}
         <label htmlFor="subcategory" className="shippingView__label">
@@ -95,13 +118,11 @@ const EditProductsView: React.FC = () => {
         </label>
         <input
           name="subcategory"
-          //   placeholder="Enter Country"
+          placeholder={product.subcategory}
           type="text"
-          //   ref={register({ required: true })}
+          ref={register({ required: false })}
           className="shippingView__form__input"
           id="subcategory"
-          //   value={country}
-          //   onChange={(e) => handleCountryChange(e)}
         />
         {/* description */}
         <label htmlFor="description" className="shippingView__label">
@@ -109,13 +130,16 @@ const EditProductsView: React.FC = () => {
         </label>
         <textarea
           name="description"
+          placeholder={product.description}
+          //   {...register("description")}
+          ref={register({ required: false })}
           id="description"
           className="shippingView__form__input"
           style={{ resize: "vertical", height: 100 }}
         />
 
         <Button
-          type="button"
+          type="submit"
           variant="contained"
           className="registerUserView__form__submit"
           style={{
@@ -132,6 +156,6 @@ const EditProductsView: React.FC = () => {
       </form>
     </div>
   );
-};
+});
 
 export default EditProductsView;

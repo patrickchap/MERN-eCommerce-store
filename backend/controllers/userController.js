@@ -105,16 +105,10 @@ const changeUserAdminRights = asyncHandler(async (req, res) => {
 
 //admin only
 const deleteUser = asyncHandler(async (req, res) => {
-  console.log("deleteUser");
-  console.log({ _id: req.body._id });
-
   const result = await User.deleteOne({ _id: req.body._id });
   if (result.deletedCount === 1) {
-    console.log("Deleted");
-
     res.json({ msg: "User Deleted" });
   } else {
-    console.log("Not Deleted");
     res.json({ msg: "No documents matched the query. Deleted 0 documents." });
   }
 });

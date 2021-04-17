@@ -18,7 +18,12 @@ const styles = {
 const ProductListView: React.FC = observer(() => {
   const root = useContext(rootStore);
   const { userInfo } = root.UserStore;
-  const { products, createNewProduct, loadProducts } = root.ProductStore;
+  const {
+    products,
+    createNewProduct,
+    loadProducts,
+    deleteProduct,
+  } = root.ProductStore;
   const history = useHistory();
 
   const createProduct = () => {
@@ -78,7 +83,11 @@ const ProductListView: React.FC = observer(() => {
               <td>
                 <DeleteForeverIcon
                   style={{ cursor: "pointer" }}
-                  //   onClick={() => {}}
+                  onClick={() => {
+                    if (userInfo) {
+                      deleteProduct(userInfo.token, product._id);
+                    }
+                  }}
                 />
               </td>
             </tr>

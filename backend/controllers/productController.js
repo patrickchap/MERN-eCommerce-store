@@ -1,6 +1,5 @@
 const Product = require("../Models/product");
 const asyncHandler = require("express-async-handler");
-const { restart } = require("nodemon");
 
 const getProducts = asyncHandler(async (req, res) => {
   let products = await Product.find();
@@ -66,9 +65,48 @@ const createNewProduct = asyncHandler(async (req, res) => {
   }
 });
 
+//admin only
+const deleteProduct = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const result = await Product.deleteOne({ _id: id });
+  if (result.deletedCount === 1) {
+    res.json({ msg: "Product Deleted" });
+  } else {
+    res.json({ msg: "No documents matched the query. Deleted 0 documents." });
+  }
+});
+
+//put
+//admin only
+const updateProducts = asyncHandler(async (req, res) => {
+  const product = await Product.findById(req.params.id);
+  if (product) {
+    product.name = req.body.name || product.name;
+    product.price = req.body.price || product.price;
+    product.countInStock = req.body.countInStock || product.countInStock;
+    product.image = req.body.image || product.image;
+    product.category = req.body.category || product.category;
+    product.subcategory = req.body.subcategory || product.subcategory;
+    product.description = req.body.description || product.description;
+  }
+
+  const updateProduct = await product.save();
+  res.json({
+    name: updateProduct.name,
+    price: updateProduct.price,
+    countInStock: updateProduct.countInStock,
+    image: updateProduct.image,
+    category: updateProduct.category,
+    subcategory: updateProduct.subcategory,
+    description: updateProduct.description,
+  });
+});
+
 module.exports = {
   getProducts,
   getProductById,
   postProductReview,
   createNewProduct,
+  deleteProduct,
+  updateProducts,
 };
