@@ -1,9 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { rootStore } from "../../../RootStore";
 import { observer } from "mobx-react-lite";
 import "./ProductListView.css";
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
 const styles = {
   home: {
@@ -16,7 +18,7 @@ const styles = {
 const ProductListView: React.FC = observer(() => {
   const root = useContext(rootStore);
   const { userInfo } = root.UserStore;
-  const { products, createNewProduct } = root.ProductStore;
+  const { products, createNewProduct, loadProducts } = root.ProductStore;
   const history = useHistory();
 
   const createProduct = () => {
@@ -24,11 +26,12 @@ const ProductListView: React.FC = observer(() => {
       createNewProduct(userInfo?.token).then((response) =>
         history.push(`/products/edit/${response}`)
       );
-      //   const { data } = await createNewProduct(userInfo?.token);
-      //   console.log(data);
-      //   history.push(`/products/edit/${id}`);
     }
   };
+
+  useEffect(() => {
+    loadProducts();
+  }, [products, createNewProduct, loadProducts]);
 
   return (
     <div className="productListView" style={styles.home}>
@@ -66,8 +69,18 @@ const ProductListView: React.FC = observer(() => {
               <td>{product.name}</td>
               <td>{product.category}</td>
               <td>{product.subcategory}</td>
-              <td>...</td>
-              <td>...</td>
+              <td
+                onClick={() => history.push(`/products/edit/${product._id}`)}
+                style={{ cursor: "pointer" }}
+              >
+                <EditIcon />
+              </td>
+              <td>
+                <DeleteForeverIcon
+                  style={{ cursor: "pointer" }}
+                  //   onClick={() => {}}
+                />
+              </td>
             </tr>
           ))}
         </tbody>

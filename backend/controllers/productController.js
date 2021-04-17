@@ -47,7 +47,6 @@ const postProductReview = asyncHandler(async (req, res) => {
 });
 
 const createNewProduct = asyncHandler(async (req, res) => {
-  console.log(">>>>> createNewProduct");
   let newProduct = {
     user: req.user._id,
     name: "createdName",
