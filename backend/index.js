@@ -5,7 +5,9 @@ dotenv.config();
 const connectDB = require("./config/db");
 const productRoutes = require("./routes/productRoutes");
 const userRoutes = require("./routes/userRoutes");
+const uploadRouts = require("./routes/uploadRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
+const path = require("path");
 
 connectDB();
 const app = express();
@@ -17,8 +19,15 @@ app.get("/", (req, res) => {
 
 app.use("/api/products/", productRoutes);
 app.use("/api/users/", userRoutes);
+app.use("/api/upload/", uploadRouts);
 
+app.use(express.static("uploads"));
+app.use("/uploads", express.static(__dirname + "/uploads"));
+
+// app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+// app.use("/uploads", express.static(express.static("/uploads")));
 //for 404 errors - not found
+
 app.use(notFound);
 app.use(errorHandler);
 

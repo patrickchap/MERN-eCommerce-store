@@ -35,8 +35,9 @@ const ProductListView: React.FC = observer(() => {
   };
 
   useEffect(() => {
+    if (!userInfo?.isAdmin) history.push("/");
     loadProducts();
-  }, [products, createNewProduct, loadProducts]);
+  }, [products, createNewProduct, loadProducts, userInfo?.isAdmin, history]);
 
   return (
     <div className="productListView" style={styles.home}>
@@ -62,6 +63,7 @@ const ProductListView: React.FC = observer(() => {
         <thead>
           <td>ID</td>
           <td>Name</td>
+          <td>Price</td>
           <td>Category</td>
           <td>Subcategory</td>
           <td>Edit</td>
@@ -72,6 +74,7 @@ const ProductListView: React.FC = observer(() => {
             <tr>
               <td>{product._id}</td>
               <td>{product.name}</td>
+              <td>{`$${product.price}`}</td>
               <td>{product.category}</td>
               <td>{product.subcategory}</td>
               <td

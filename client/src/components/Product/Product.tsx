@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+///Users/patrickchapple/github/eCommerceStore/uploads
 const Product: React.FC<props> = ({ prod }) => {
   const classes = useStyles();
   return (

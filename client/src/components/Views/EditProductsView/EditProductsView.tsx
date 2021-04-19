@@ -1,11 +1,12 @@
 import Button from "@material-ui/core/Button";
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./EditProductsView.css";
 import { rootStore } from "../../../RootStore";
 import { observer } from "mobx-react-lite";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 const styles = {
   home: {
@@ -31,6 +32,7 @@ const EditProductsView: React.FC = observer(() => {
   const { userInfo } = root.UserStore;
   const { loadProduct, product, updateProduct } = root.ProductStore;
   const history = useHistory();
+  const [imageURL, setImageURL] = useState(product.image);
 
   useEffect(() => {
     loadProduct(id);
@@ -45,12 +47,35 @@ const EditProductsView: React.FC = observer(() => {
     }
   };
 
+  const handleImageChange = (e: any) => {
+    setImageURL(e.target.value);
+  };
+
+  const handlePhoto = (e: any) => {
+    // console.log(e.target.files[0]);
+    let file = e.target.files[0];
+    let formData = new FormData();
+    formData.append("photo", file);
+    console.log("axios");
+
+    axios
+      .post("/api/upload/photo", formData)
+      .then((res) => {
+        setImageURL(res.data);
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="editProductsView" style={styles.home}>
       <h2>Edit Product</h2>
       <form
         className="editProductsView__form"
         onSubmit={handleSubmit(onSubmit)}
+        encType="multipart/form-data"
       >
         {/* name */}
         <label htmlFor="name" className="shippingView__label">
@@ -99,7 +124,10 @@ const EditProductsView: React.FC = observer(() => {
           ref={register({ required: false })}
           className="shippingView__form__input"
           id="image"
+          value={imageURL}
+          onChange={(e) => handleImageChange(e)}
         />
+        <input type="file" name="photo" onChange={handlePhoto} />
         {/* category */}
         <label htmlFor="category" className="shippingView__label">
           Category
