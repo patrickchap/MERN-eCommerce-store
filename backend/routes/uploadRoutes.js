@@ -5,7 +5,7 @@ const path = require("path");
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, "client/public/images");
+    cb(null, "uploads/");
   },
   filename(req, file, cb) {
     cb(
@@ -31,7 +31,7 @@ const fileFilter = (req, file, cb) => {
 let upload = multer({ storage, fileFilter });
 
 router.route("/photo").post(upload.single("photo"), (req, res) => {
-  res.send(`/images/${req.file.filename}`);
+  res.send(`/${req.file.path}`);
 });
 
 module.exports = router;
