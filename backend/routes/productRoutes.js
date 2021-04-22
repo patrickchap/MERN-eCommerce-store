@@ -11,7 +11,6 @@ const {
 const { protect, protectAdmin } = require("../middleware/authMiddleware");
 
 router.route("/").get(getProducts);
-
 router.route("/:id").get(getProductById);
 router.route("/:id/review").post(protect, postProductReview);
 router.route("/create").post(protectAdmin, createNewProduct);

@@ -6,9 +6,23 @@ import { rootStore } from "../../../RootStore";
 import "./PaymentView.css";
 import OrderSummary from "../../OrderSumary/OrderSummary";
 
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckoutForm from "../../CheckoutForm/CheckoutForm";
+
+// import CheckoutForm from "./CheckoutForm";
+
 interface props {
   ShippingFlow: React.FC<{}>;
 }
+
+declare var process: {
+  env: {
+    REACT_APP_STRIPE_KEY: string;
+  };
+};
+
+const promise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 
 const PaymentView: React.FC<props> = observer(({ ShippingFlow }) => {
   return (
@@ -25,7 +39,10 @@ const PaymentView: React.FC<props> = observer(({ ShippingFlow }) => {
             <ShippingFlow />
           </div>
           <div className="paymentView__form__body">
-            <label htmlFor="name" className="paymentView__label">
+            <Elements stripe={promise}>
+              <CheckoutForm />
+            </Elements>
+            {/* <label htmlFor="name" className="paymentView__label">
               Name on Card
             </label>
             <input
@@ -85,7 +102,7 @@ const PaymentView: React.FC<props> = observer(({ ShippingFlow }) => {
                   // onChange={(e) => handleAddressChange(e)}
                 />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 
