@@ -1,36 +1,54 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-// import { ConfirmCardPaymentData, StripeElements } from "@stripe/stripe-js";
+import { observer } from "mobx-react-lite";
+import { rootStore } from "../../RootStore";
 import "./CheckoutForm.css";
 
-export default function CheckoutForm() {
+interface billingDetails {
+  name: string;
+  email: string;
+  address: { city: string; line1: string; state: string; postal_code: number };
+}
+
+export default observer(function CheckoutForm() {
+  const root = useContext(rootStore);
+  const { userInfo } = root.UserStore;
+  const { shippingDetail, cartItems, shippingAndHandling } = root.CartStore;
+
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [processing, setProcessing] = useState<boolean>(false);
   const [disabled, setDisabled] = useState(true);
   const [clientSecret, setClientSecret] = useState("");
+  const [name, setName] = useState(userInfo?.name ? userInfo.name : "");
   const stripe = useStripe();
   const elements = useElements();
 
+  const handleNameChange = (e: any) => {
+    setName(e.target.value);
+  };
+
   useEffect(() => {
-    // Create PaymentIntent as soon as the page loads
+    // Create PaymentIntent
     window
       .fetch("/create-payment-intent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ items: [{ id: "xl-tshirt" }] }),
+        body: JSON.stringify({
+          items: cartItems,
+          shipping: shippingAndHandling,
+        }),
       })
       .then((res) => {
         return res.json();
       })
       .then((data) => {
         setClientSecret(data.clientSecret);
+        console.log(data.clientSecret);
       });
-    console.log("clientSecret");
-    // console.log(clientSecret);
-  }, []);
+  }, [cartItems, shippingAndHandling]);
 
   const cardStyle = {
     style: {
@@ -58,19 +76,22 @@ export default function CheckoutForm() {
     setError(event.error ? event.error.message : "");
   };
 
+  console.log(shippingDetail.Country);
   const handleSubmit = async (ev: any) => {
     ev.preventDefault();
     setProcessing(true);
 
     const billingDetails = {
-      name: "TestBilling Name",
-      email: "email@email.com",
       address: {
-        city: "Salt Lake City",
-        line1: "427 Westminster Ave",
+        city: shippingDetail.City,
+        // country: shippingDetail.Country,
+        line1: shippingDetail.Address,
+        postal_code: String(shippingDetail.PostalCode),
         state: "UT",
-        postal_code: "84115",
       },
+
+      email: userInfo?.email,
+      name: name,
     };
 
     let card = elements?.getElement(CardElement);
@@ -79,6 +100,7 @@ export default function CheckoutForm() {
       const paymentMethod = await stripe?.createPaymentMethod({
         type: "card",
         card: card,
+        billing_details: billingDetails,
       });
 
       const payload = await stripe?.confirmCardPayment(clientSecret, {
@@ -99,7 +121,12 @@ export default function CheckoutForm() {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
-      <input type="text" placeholder="Name" />
+      <input
+        type="text"
+        placeholder="Name"
+        value={name}
+        onChange={handleNameChange}
+      />
       <CardElement
         id="card-element"
         options={cardStyle}
@@ -133,4 +160,4 @@ export default function CheckoutForm() {
       </p>
     </form>
   );
-}
+});
